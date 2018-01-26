@@ -12,7 +12,7 @@ jaxws/jaxws-endpoint/src/main/webapp/WEB-INF/wsdl/
 .DS_Store
  
 *.class
- 
+
 # Package Files #
 *.jar
 *.war
@@ -95,6 +95,10 @@ local.properties
 
 # Testing environment specific
 derby.log
+
+
+# Project files
+audit.log
 
 
 ######################
