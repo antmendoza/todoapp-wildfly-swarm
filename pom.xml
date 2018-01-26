@@ -48,38 +48,37 @@
 
 	</dependencyManagement>
 
+
+
+
 	<build>
-		<finalName>todoapp</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.wildfly.swarm</groupId>
 				<artifactId>wildfly-swarm-plugin</artifactId>
-				<version>${version.wildfly.swarm}</version>
-
 				<executions>
 					<execution>
-						<goals>
-							<goal>package</goal>
-						</goals>
+						<id>package</id>
+					</execution>
+					<execution>
+						<id>start</id>
+					</execution>
+					<execution>
+						<id>stop</id>
 					</execution>
 				</executions>
 			</plugin>
 		</plugins>
 	</build>
 
+
+
 	<dependencies>
 
 		<!-- swagger -->
-		<!-- dependency>
-			<groupId>org.wildfly.swarm</groupId>
-			<artifactId>swagger</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.wildfly.swarm.servers</groupId>
-			<artifactId>swagger-ui</artifactId>
-			<classifier>swarm</classifier>
-			<version>2018.1.0</version>
-		</dependency-->
+		<!-- dependency> <groupId>org.wildfly.swarm</groupId> <artifactId>swagger</artifactId> 
+			</dependency> <dependency> <groupId>org.wildfly.swarm.servers</groupId> <artifactId>swagger-ui</artifactId> 
+			<classifier>swarm</classifier> <version>2018.1.0</version> </dependency -->
 
 		<!-- Java EE 7 dependency -->
 		<dependency>

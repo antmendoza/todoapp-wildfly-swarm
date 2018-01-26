@@ -35,8 +35,11 @@ public class TaskEndpointTest {
 	@Test
 	@RunAsClient
 	public void test() {
+		
+		int taskId = 2;
+		
 		final Client client = ClientBuilder.newBuilder().build();
-		final WebTarget target = client.target("http://localhost:8080/tasks/2");
+		final WebTarget target = client.target("http://localhost:8080/tasks/"+taskId);
 		final Response response = target.request().get();
 		final Task task = response.readEntity(Task.class);
 
