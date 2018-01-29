@@ -27,11 +27,6 @@
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
-
-
-
-
-
 			<dependency>
 				<groupId>org.jboss.arquillian</groupId>
 				<artifactId>arquillian-bom</artifactId>
@@ -39,13 +34,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-
-
 		</dependencies>
-
-
-
-
 	</dependencyManagement>
 
 
@@ -53,6 +42,32 @@
 
 	<build>
 		<plugins>
+
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-resource</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-test-resource</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>src/test/resources</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+
+
+
 			<plugin>
 				<groupId>org.wildfly.swarm</groupId>
 				<artifactId>wildfly-swarm-plugin</artifactId>
@@ -60,15 +75,10 @@
 					<execution>
 						<id>package</id>
 					</execution>
-					<execution>
-						<id>start</id>
-					</execution>
-					<execution>
-						<id>stop</id>
-					</execution>
 				</executions>
 			</plugin>
 		</plugins>
+
 	</build>
 
 
@@ -104,6 +114,23 @@
 
 
 
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.187</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.spec.javax.servlet</groupId>
+			<artifactId>jboss-servlet-api_3.1_spec</artifactId>
+			<version>1.0.0.Final</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<version>1.0.0.Final</version>
+		</dependency>
+
 
 
 
@@ -136,14 +163,6 @@
 			<version>${version.resteasy}</version>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>1.4.192</version>
-		</dependency>
-
-
 
 	</dependencies>
 </project>

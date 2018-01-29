@@ -1,9 +1,6 @@
-todoapp
+TODO app
 ====
 
-Is a simple applicatoin to manage TODO list. Has been built by using  Wildfly Swarm.
+This is a simple application to manage TODO list. It has been built by using  `Wildfly Swarm`.
 
-To run the application execute:
-`mvn clean package`
-`mvn clean package`
- 
+To have the app running execute `mvn wildfly-swarm:run`. The rest end-point will be exposed on `http://localhost:8080/tasks`
