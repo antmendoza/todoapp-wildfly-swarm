@@ -30,6 +30,7 @@ public class TaskEndpoint {
 			task = new FindTaskById(em, id).executeQuery();
 			return Response.ok(task).build();
 		} catch (Exception e) {
+			e.printStackTrace();
 			return Response.noContent().build();
 		}
 

@@ -24,8 +24,6 @@ import com.antmendoza.todoapp.todoapp.query.FindTaskById;
 @RunWith(Arquillian.class)
 public class TaskEndpointTest {
 
-
-	
 	@Deployment(testable = false)
 	public static Archive createDeployment() throws Exception {
 		JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class, "todoapp.war");
@@ -33,21 +31,21 @@ public class TaskEndpointTest {
 		deployment.addClass(TaskEndpoint.class);
 		deployment.addClass(FindAllTask.class);
 		deployment.addClass(FindTaskById.class);
-		deployment.addAsResource("META-INF/persistence.xml", "META-INF/load.sql");
+		deployment.addAsResource("META-INF/load.sql");
+		deployment.addAsResource("META-INF/persistence.xml");
 		deployment.addAllDependencies();
 		return deployment;
 	}
 
 	@Test
-	@Ignore 		//FIXME test are not loading persistence configuration.
-
+	// @Ignore //FIXME test are not loading persistence configuration.
 	@RunAsClient
 	public void test() {
-		
+
 		int taskId = 2;
-		
+
 		final Client client = ClientBuilder.newBuilder().build();
-		final WebTarget target = client.target("http://localhost:8080/tasks/"+taskId);
+		final WebTarget target = client.target("http://localhost:8080/tasks/" + taskId);
 		final Response response = target.request().get();
 		final Task task = response.readEntity(Task.class);
 
