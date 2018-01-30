@@ -1,10 +1,10 @@
-package com.antmendoza.todoapp.todoapp.query;
+package com.antmendoza.todoapp.query;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import com.antmendoza.todoapp.todoapp.model.Task;
+import com.antmendoza.todoapp.model.Task;
 
 public class FindAllTask {
 

@@ -15,13 +15,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.wildfly.swarm.jaxrs.JAXRSArchive;
 
-import com.antmendoza.todoapp.todoapp.model.Task;
-import com.antmendoza.todoapp.todoapp.query.FindAllTask;
-import com.antmendoza.todoapp.todoapp.query.FindTaskById;
+import com.antmendoza.todoapp.model.Task;
+import com.antmendoza.todoapp.query.FindAllTask;
+import com.antmendoza.todoapp.query.FindTaskById;
 
 @RunWith(Arquillian.class)
 public class TaskEndpointTest {
 
+	
+	
 	@Deployment(testable = false)
 	public static JAXRSArchive createDeployment() throws Exception {
 		JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class, "todoapp.war");
@@ -35,10 +37,12 @@ public class TaskEndpointTest {
 		return deployment;
 	}
 
+	
+	
 	@Test
 	@RunAsClient
-	public void test() {
-		final int taskId = 2;
+	public void retrieveTask() {
+		final int taskId = 1;
 		
 		final Client client = ClientBuilder.newBuilder().build();
 		final WebTarget target = client.target("http://localhost:8080/task/" + taskId);

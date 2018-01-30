@@ -11,8 +11,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.antmendoza.todoapp.todoapp.model.Task;
-import com.antmendoza.todoapp.todoapp.query.FindTaskById;
+import com.antmendoza.todoapp.model.Task;
+import com.antmendoza.todoapp.query.FindTaskById;
 
 @Path("/task")
 @Produces(MediaType.APPLICATION_JSON)

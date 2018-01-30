@@ -1,8 +1,8 @@
-package com.antmendoza.todoapp.todoapp.query;
+package com.antmendoza.todoapp.query;
 
 import javax.persistence.EntityManager;
 
-import com.antmendoza.todoapp.todoapp.model.Task;
+import com.antmendoza.todoapp.model.Task;
 
 public class FindTaskById {
 

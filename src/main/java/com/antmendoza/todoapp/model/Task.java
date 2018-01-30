@@ -1,4 +1,4 @@
-package com.antmendoza.todoapp.todoapp.model;
+package com.antmendoza.todoapp.model;
 
 import java.io.Serializable;
 
