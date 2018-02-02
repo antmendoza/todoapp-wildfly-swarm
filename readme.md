@@ -1,6 +1,10 @@
 TODO app
 ====
 
-This is a simple application to manage TODO list. It has been built by using  `Wildfly Swarm`.
+TODO application as a POC using `Wildfly Swarm` and `arquillian` for integration test. 
 
-To have the app running execute `mvn wildfly-swarm:run`. The rest end-point will be exposed on `http://localhost:8080/tasks`
+The application expose a REST endpoint to manage TODOs.
+
+- `http://localhost:8080/task/{:taskId}`
+
+To run the app execute `mvn wildfly-swarm:run`.
