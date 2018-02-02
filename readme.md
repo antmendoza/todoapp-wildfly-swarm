@@ -5,6 +5,6 @@ TODO application as a POC using `Wildfly Swarm` and `arquillian` for integration
 
 The application expose a REST endpoint to manage TODOs.
 
-- `http://localhost:8080/task/{:taskId}`
+- `http://localhost:8080/tasks/{:taskId}`
 
 To run the app execute `mvn wildfly-swarm:run`.

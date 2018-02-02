@@ -22,8 +22,6 @@ import com.antmendoza.todoapp.query.FindTaskById;
 @RunWith(Arquillian.class)
 public class TaskEndpointTest {
 
-	
-	
 	@Deployment(testable = false)
 	public static JAXRSArchive createDeployment() throws Exception {
 		JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class, "todoapp.war");
@@ -37,16 +35,14 @@ public class TaskEndpointTest {
 		return deployment;
 	}
 
-	
-	
 	@Test
 	@RunAsClient
 	public void retrieveTask() {
 		final int taskId = 1;
-		
+
 		final Client client = ClientBuilder.newBuilder().build();
-		final WebTarget target = client.target("http://localhost:8080/task/" + taskId);
-		
+		final WebTarget target = client.target("http://localhost:8080/tasks/" + taskId);
+
 		final Response response = target.request().get();
 		final Task task = response.readEntity(Task.class);
 		assertEquals(taskId, task.getId().intValue());

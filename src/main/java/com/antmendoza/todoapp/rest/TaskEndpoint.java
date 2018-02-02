@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 import com.antmendoza.todoapp.model.Task;
 import com.antmendoza.todoapp.query.FindTaskById;
 
-@Path("/task")
+@Path("/tasks")
 @Produces(MediaType.APPLICATION_JSON)
 @RequestScoped
 @Transactional
@@ -29,4 +29,5 @@ public class TaskEndpoint {
 		final Task task = new FindTaskById(em, id).executeQuery();
 		return Response.ok(task).build();
 	}
+
 }
