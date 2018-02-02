@@ -19,6 +19,7 @@ import com.antmendoza.todoapp.model.Task;
 import com.antmendoza.todoapp.query.FindAllTask;
 import com.antmendoza.todoapp.query.FindTaskById;
 
+
 @RunWith(Arquillian.class)
 public class TaskEndpointTest {
 
@@ -42,7 +43,7 @@ public class TaskEndpointTest {
 
 		final Client client = ClientBuilder.newBuilder().build();
 		final WebTarget target = client.target("http://localhost:8080/tasks/" + taskId);
-
+		
 		final Response response = target.request().get();
 		final Task task = response.readEntity(Task.class);
 		assertEquals(taskId, task.getId().intValue());
