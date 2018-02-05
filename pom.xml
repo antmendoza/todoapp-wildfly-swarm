@@ -132,9 +132,6 @@
                 <groupId>org.eluder.coveralls</groupId>
                 <artifactId>coveralls-maven-plugin</artifactId>
                 <version>4.3.0</version>
-                <configuration>
-                    <repoToken>xK0NnfYxMixXtBL7cp6HHwLt913vCf1EE</repoToken>
-                </configuration>
             </plugin>
 
             <plugin>
