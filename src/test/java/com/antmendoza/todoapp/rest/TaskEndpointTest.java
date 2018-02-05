@@ -19,6 +19,8 @@ import com.antmendoza.todoapp.model.Task;
 import com.antmendoza.todoapp.query.FindAllTask;
 import com.antmendoza.todoapp.query.FindTaskById;
 
+import java.util.List;
+
 
 @RunWith(Arquillian.class)
 public class TaskEndpointTest {
@@ -36,17 +38,32 @@ public class TaskEndpointTest {
 		return deployment;
 	}
 
-	@Test
-	@RunAsClient
-	public void retrieveTask() {
-		final int taskId = 1;
+    @Test
+    @RunAsClient
+    public void retrieveAllTask() {
 
-		final Client client = ClientBuilder.newBuilder().build();
-		final WebTarget target = client.target("http://localhost:8080/tasks/" + taskId);
-		
-		final Response response = target.request().get();
-		final Task task = response.readEntity(Task.class);
-		assertEquals(taskId, task.getId().intValue());
-	}
+        final Client client = ClientBuilder.newBuilder().build();
+        final WebTarget target = client.target("http://localhost:8080/tasks/");
+
+
+        final Response response = target.request().get();
+        final List tasks = response.readEntity(List.class);
+        assertEquals(4, tasks.size());
+    }
+
+
+    @Test
+    @RunAsClient
+    public void retrieveTaskById() {
+        final int taskId = 1;
+
+        final Client client = ClientBuilder.newBuilder().build();
+        final WebTarget target = client.target("http://localhost:8080/tasks/" + taskId);
+
+        final Response response = target.request().get();
+        final Task task = response.readEntity(Task.class);
+        assertEquals(taskId, task.getId().intValue());
+    }
+
 
 }
