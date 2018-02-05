@@ -109,6 +109,10 @@
 			<scope>test</scope>
 		</dependency>
 
+
+
+
+
 	</dependencies>
 
 	<build>
@@ -122,6 +126,30 @@
 					</execution>
 				</executions>
 			</plugin>
+
+
+            <plugin>
+                <groupId>org.eluder.coveralls</groupId>
+                <artifactId>coveralls-maven-plugin</artifactId>
+                <version>4.3.0</version>
+                <configuration>
+                    <repoToken>xK0NnfYxMixXtBL7cp6HHwLt913vCf1EE</repoToken>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.0</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 			
 		</plugins>
 	</build>
