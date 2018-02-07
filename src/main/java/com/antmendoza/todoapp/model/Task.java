@@ -24,7 +24,7 @@ public class Task implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@XmlElement(required = true)
 	@Column
 	private Integer id;
@@ -45,9 +45,12 @@ public class Task implements Serializable {
 	public Task() {
 	}
 
-	public Task(int id) {
-		this.id = id;
+	public Task(final String description, final boolean done, final int listId) {
+		this.description=description;
+		this.done = done;
+		this.listId = listId;
 	}
+
 
 	public Integer getId() {
 		return id;
