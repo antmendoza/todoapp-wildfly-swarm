@@ -3,6 +3,6 @@ language:
 sudo: 
     - false
 script:
-  - mvn test jacoco:report
+  - mvn clean test -Pjacoco jacoco:report
 after_success:
   - mvn coveralls:report
