@@ -1,18 +1,6 @@
 package com.antmendoza.todoapp.rest;
 
-import static org.junit.Assert.assertEquals;
-
-import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.UserTransaction;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Response;
-
-import com.antmendoza.todoapp.persistence.DeleteTableCallback;
+import com.antmendoza.todoapp.model.Task;
 import com.antmendoza.todoapp.persistence.TransactionalOperation;
 import com.antmendoza.todoapp.query.CreateTask;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -24,39 +12,36 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.wildfly.swarm.jaxrs.JAXRSArchive;
 
-import com.antmendoza.todoapp.model.Task;
-import com.antmendoza.todoapp.query.FindAllTask;
-import com.antmendoza.todoapp.query.FindTaskById;
-
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Response;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 
 @RunWith(Arquillian.class)
 public class TaskEndpointTest {
 
 
-    @PersistenceContext
-    private EntityManager em;
-
-    @Inject
-    private UserTransaction utx;
-
-
-	@Deployment
-	public static JAXRSArchive createDeployment() throws Exception {
-		JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class, "todoapp.war");
-		deployment.addClass(Task.class);
-		deployment.addClass(TaskEndpoint.class);
+    @Deployment
+    public static JAXRSArchive createDeployment() throws Exception {
+        JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class, "todoapp.war");
+        deployment.addClass(Task.class);
+        deployment.addClass(TaskEndpoint.class);
 
         deployment.addPackage(CreateTask.class.getPackage());
         deployment.addPackage(TransactionalOperation.class.getPackage());
 
         deployment.addAsResource("META-INF/load.sql");
-		deployment.addAsResource("META-INF/persistence.xml");
+        deployment.addAsResource("META-INF/persistence.xml");
         deployment.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
         deployment.addAllDependencies();
-		return deployment;
-	}
+        return deployment;
+    }
 
     @Test
     @RunAsClient
@@ -67,6 +52,7 @@ public class TaskEndpointTest {
 
 
         final Response response = target.request().get();
+        assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
         final List tasks = response.readEntity(List.class);
         assertEquals(4, tasks.size());
     }
@@ -81,10 +67,24 @@ public class TaskEndpointTest {
         final WebTarget target = client.target("http://localhost:8080/tasks/" + taskId);
 
         final Response response = target.request().get();
+        assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
+
         final Task task = response.readEntity(Task.class);
         assertEquals(taskId, task.getId().intValue());
     }
 
+    @Test
+    @RunAsClient
+    public void retrieveTaskByIdNotFound() {
+        final int taskId = 88;
+
+        final Client client = ClientBuilder.newBuilder().build();
+        final WebTarget target = client.target("http://localhost:8080/tasks/" + taskId);
+
+        final Response response = target.request().get();
+        assertEquals(response.getStatus(), Response.Status.NOT_FOUND.getStatusCode());
+
+    }
 
 
     @Test
@@ -95,8 +95,35 @@ public class TaskEndpointTest {
         final WebTarget target = client.target("http://localhost:8080/tasks");
 
         final Response response = target.request().post(Entity.json(new Task("task created", false, 1)));
+
+        assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
         final Task task = response.readEntity(Task.class);
         assertEquals("task created", task.getDescription());
+    }
+
+    @Test
+    @RunAsClient
+    public void deleteTaskOK() throws Exception {
+        final int taskId = 4;
+
+        final Client client = ClientBuilder.newBuilder().build();
+        final WebTarget target = client.target("http://localhost:8080/tasks/" + taskId);
+        final Response response = target.request().delete();
+
+        assertEquals(response.getStatus(), Response.Status.NO_CONTENT.getStatusCode());
+        assertFalse(response.hasEntity());
+    }
+
+    @Test
+    @RunAsClient
+    public void deleteTaskNotFound() throws Exception {
+        final int taskId = 88;
+
+        final Client client = ClientBuilder.newBuilder().build();
+        final WebTarget target = client.target("http://localhost:8080/tasks/" + taskId);
+        final Response response = target.request().delete();
+
+        assertEquals(response.getStatus(), Response.Status.NOT_FOUND.getStatusCode());
     }
 
 

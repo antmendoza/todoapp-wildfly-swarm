@@ -5,8 +5,6 @@ import javax.persistence.EntityManager;
 
 public class PersistCallback<T> implements PersistenceCallback{
 
-
-
     private final EntityManager em;
     private final T t;
 
