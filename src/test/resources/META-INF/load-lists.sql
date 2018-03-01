@@ -1,0 +1,1 @@
+INSERT INTO LIST("ID","DESCRIPTION") VALUES (1,'Sample list')

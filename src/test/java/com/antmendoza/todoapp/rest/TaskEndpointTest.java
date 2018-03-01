@@ -32,12 +32,13 @@ public class TaskEndpointTest {
         JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class, "todoapp.war");
         deployment.addClass(Task.class);
         deployment.addClass(TaskEndpoint.class);
+        deployment.addClass(Callback.class);
 
         deployment.addPackage(CreateTask.class.getPackage());
         deployment.addPackage(TransactionalOperation.class.getPackage());
 
-        deployment.addAsResource("META-INF/load.sql");
-        deployment.addAsResource("META-INF/persistence.xml");
+        deployment.addAsResource("META-INF/load-tasks.sql" , "META-INF/data.sql" );
+        deployment.addAsResource("META-INF/persistence-test.xml", "META-INF/persistence.xml");
         deployment.addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
         deployment.addAllDependencies();
         return deployment;
@@ -67,7 +68,7 @@ public class TaskEndpointTest {
         final WebTarget target = client.target("http://localhost:8080/tasks/" + taskId);
 
         final Response response = target.request().get();
-        assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 
         final Task task = response.readEntity(Task.class);
         assertEquals(taskId, task.getId().intValue());
@@ -82,7 +83,7 @@ public class TaskEndpointTest {
         final WebTarget target = client.target("http://localhost:8080/tasks/" + taskId);
 
         final Response response = target.request().get();
-        assertEquals(response.getStatus(), Response.Status.NOT_FOUND.getStatusCode());
+        assertEquals(Response.Status.NOT_FOUND.getStatusCode(), response.getStatus());
 
     }
 
@@ -96,7 +97,7 @@ public class TaskEndpointTest {
 
         final Response response = target.request().post(Entity.json(new Task("task created", false, 1)));
 
-        assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
+        assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
         final Task task = response.readEntity(Task.class);
         assertEquals("task created", task.getDescription());
     }
@@ -110,7 +111,7 @@ public class TaskEndpointTest {
         final WebTarget target = client.target("http://localhost:8080/tasks/" + taskId);
         final Response response = target.request().delete();
 
-        assertEquals(response.getStatus(), Response.Status.NO_CONTENT.getStatusCode());
+        assertEquals(Response.Status.NO_CONTENT.getStatusCode(), response.getStatus());
         assertFalse(response.hasEntity());
     }
 
@@ -123,7 +124,7 @@ public class TaskEndpointTest {
         final WebTarget target = client.target("http://localhost:8080/tasks/" + taskId);
         final Response response = target.request().delete();
 
-        assertEquals(response.getStatus(), Response.Status.NOT_FOUND.getStatusCode());
+        assertEquals(Response.Status.NOT_FOUND.getStatusCode(), response.getStatus());
     }
 
 

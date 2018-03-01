@@ -29,16 +29,14 @@ public class TaskEndpoint {
     @GET
     @Path("{id}")
     public Response getTask(@PathParam("id") final int id) {
-
         return executeOnTask(id, new Callback<Task, Response>() {
             @Override
             public Response call(Task task) {
                 return Response.ok(task).build();
             }
         });
-
-
     }
+
 
     @GET
     @Path("")
@@ -53,13 +51,12 @@ public class TaskEndpoint {
     @Path("")
     public Response createTask(final Task task) {
         new CreateTask(em, task).execute();
-        return Response.ok(task).build();
+        return Response.status(Response.Status.CREATED).entity(task).build();
     }
 
     @DELETE
     @Path("{id}")
     public Response deleteTask(@PathParam("id") final int id) {
-
 
         return executeOnTask(id, new Callback<Task, Response>() {
             public Response call(Task task) {
@@ -82,11 +79,5 @@ public class TaskEndpoint {
     }
 
 
-
-
-
-    public interface Callback<P,R> {
-        public R call(P param);
-    }
 
 }

@@ -9,10 +9,10 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "TASK")
+@Table(name = "LIST")
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Task implements Serializable {
+public class List implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -23,25 +23,16 @@ public class Task implements Serializable {
     private Integer id;
 
 
-    @Column(name = "LIST_ID")
-    @XmlElement(required = true)
-    private Integer listId;
-
     @Column(length = 200)
     @XmlElement(required = true)
     private String description;
 
-    @Column(length = 1)
-    @XmlElement(required = true)
-    private boolean done;
 
-    public Task() {
+    public List() {
     }
 
-    public Task(final String description, final boolean done, final int listId) {
+    public List(final String description) {
         this.description = description;
-        this.done = done;
-        this.listId = listId;
     }
 
 
@@ -61,36 +52,17 @@ public class Task implements Serializable {
         this.description = description;
     }
 
-    public boolean isDone() {
-        return done;
-    }
-
-    public void setDone(boolean done) {
-        this.done = done;
-    }
-
-    public Integer getListId() {
-        return listId;
-    }
-
-    public void setListId(Integer listId) {
-        this.listId = listId;
-    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Task task = (Task) o;
-        return done == task.done &&
-                Objects.equals(id, task.id) &&
-                Objects.equals(listId, task.listId) &&
-                Objects.equals(description, task.description);
+        List list = (List) o;
+        return Objects.equals(id, list.id) &&
+                Objects.equals(description, list.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, listId, description, done);
+        return Objects.hash(id, description);
     }
 }
